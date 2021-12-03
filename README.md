@@ -1,55 +1,68 @@
 # Version Control System
-Stage 1 of 4 for JetBrains Academy - Kotlin - [Version Control System project](https://hyperskill.org/projects/177/stages/909/implement).   
-This stage has us print a description of the command that was passed to it, and all the descriptions if `--help`, or nothing, was passed to it.
+Stage 2 of 4 for JetBrains Academy - Kotlin - [Version Control System project](https://hyperskill.org/projects/177/stages/910/implement).   
+This stage has us add the option for the user to update config.txt and index.txt files, for updating the user and files being tracked.
 ## Requirements
 ### Description
-A **version control system** is software that can keep track of the changes that were implemented to a program. There are several popular version control systems (like Git, SVN, or Mercurial). Each of them has its pros and cons. They share one common idea. A version control system remembers **who** changed the file, when it was done, and why. It allows you to roll back to the previous versions as well.
+In this stage, your program should allow a user to set their name and add the files they want to track. Store a username in _config.txt_.
 
-In this project, you need to implement a simple version control system. It will be your own Git. By the way, if you want to learn how to work with Git, take a look at the [Git How To](https://githowto.com/).
-
-Take a look at the commands you will need to implement during this project:
-* `config` sets or outputs the name of a commit author;
-* `--help` prints the help page;
-* `adds` a file to the list of tracked files or outputs this list;
-* `log` shows all commits;
-* `commit` saves file changes and the author name;
-* `checkout` allows you to switch between commits and restore a previous file state.
-
-In this stage, your program should be able to accept a single argument and, depending on the argument, print help information.
+_Index.txt_ stores the files that were added to the index. Don't forget to store all the files of the version control system in the _vcs_ directory. You should create this directory programmatically. It may look something like this:
+```text
+.
+├── vcs
+│   ├── config.txt
+│   └── index.txt
+├── tracked_file.txt
+└── untracked_file.txt
+```
 ### Objectives
-In this stage, your program should:    
-* Take one argument as a command.
-* If an argument is missing, or it is `--help`, print the entire help page.
-* If a command exists, the program should output a description of the command.
-* If the command is wrong, print `'[passed argument]' is not a SVCS command.`    
+You need to work on the following commands:  
+* `config` should allow the user to set their own name or output an already existing name. If a user wants to set a new name, the program must overwrite the old one.
+* `add` should allow the user to set the name of a file that they want to track or output the names of tracked files. If the file does not exist, the program should inform a user that the file does not exist. 
 
-| Unlike many other projects, the program does not run in an infinite loop. The program starts with arguments that are passed to the main function and should do something, then starts from scratch again with other arguments and should do something else. |
+| Do not create tracked_file.txt and untracked_file.txt. This is an example of the files that a user of your version control system will work with. |
 | :--- |
 ### Examples
-The greater-than symbol followed by a space (> ) represents the user input. Note that it's not part of the input. The verification system ignores all spaces, but we suggest trying to create a nice output.
-#### Example 1: the `--help` argument
+The greater-than symbol followed by a space (> ) represents the user input. Note that it's not part of the input.
+#### Example 1: the `config` argument
 ```text
-These are SVCS commands:
-config     Get and set a username.
-add        Add a file to the index.
-log        Show commit logs.
-commit     Save changes.
-checkout   Restore a file.
+Please, tell me who you are.
 ```
-#### Example 2: no arguments
+#### Example 2: the `config John` argument
 ```text
-These are SVCS commands:
-config     Get and set a username.
-add        Add a file to the index.
-log        Show commit logs.
-commit     Save changes.
-checkout   Restore a file.
+The username is John.
 ```
 #### Example 3: the `config` argument
 ```text
-Get and set a username.
+The username is John.
 ```
-#### Example 4: the `wrong` argument
+#### Example 4: the `config Max` argument
 ```text
-'wrong' is not a SVCS command.
+The username is Max.
+```
+#### Example 5: the `add` argument.
+```text
+Add a file to the index.
+```
+#### Example 6: the `add file.txt` arguments
+```text
+The file 'file.txt' is tracked.
+```
+#### Example 7: the `add` argument
+```text
+Tracked files:
+file.txt
+```
+#### Example 8: the `add new_file.txt` argument
+```text
+The file 'new_file.txt' is tracked.
+```
+#### Example 9: the `add` argument
+```text
+Tracked files:
+file.txt
+new_file.txt
+```
+#### Example 10: the `add not_exists_file.txt` argument
+```text
+Can't find 'not_exists_file.txt'.
 ```

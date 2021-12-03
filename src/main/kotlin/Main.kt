@@ -1,19 +1,16 @@
-const val MAX_SPACE = 11 // largest command length in HELP_MAP + 3
-val HELP_MAP = mapOf(
-    "config" to "Get and set a username.",
-    "add" to "Add a file to the index.",
-    "log" to "Show commit logs.",
-    "commit" to "Save changes.",
-    "checkout" to "Restore a file."
-)
+import java.io.File
+
+const val FOLDER = "vcs"
 
 fun main(args: Array<String>) {
-    if (args.isEmpty() || args.first() == "--help") {
-        println("These are SVCS commands:")
-        HELP_MAP.forEach { (command, description) ->
-            println("$command${" ".repeat(MAX_SPACE - command.length)}$description")
-        }
-    } else {
-        println(HELP_MAP.getOrDefault(args.first(), "'${args.first()}' is not a SVCS command."))
+    val command = args.getOrNull(0) ?: ""
+    val secondArgument = args.getOrNull(1) ?: ""
+    val commands = listOf(CONFIG, ADD)
+
+    if (!File(FOLDER).isDirectory && commands.contains(command)) File(FOLDER).mkdir()
+    when (command) {
+        CONFIG -> config(secondArgument)
+        ADD -> add(secondArgument)
+        else -> help(command)
     }
 }
