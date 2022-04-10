@@ -5,7 +5,7 @@ private val HELP_MAP = mapOf(
     ADD to "Add a file to the index.",
     LOG to "Show commit logs.",
     COMMIT to "Save changes.",
-    "checkout" to "Restore a file."
+    CHECKOUT to "Restore a file."
 )
 
 fun help(command: String) {

@@ -20,4 +20,8 @@ fun addLog(commit: String, message: String) {
     }
 }
 
-fun lastLogCommit() = if (LOG_FILE.isFile) LOG_FILE.bufferedReader().readLine().split(" ").last() else ""
+fun lastLogCommit(): String {
+    return if (LOG_FILE.isFile) {
+        LOG_FILE.bufferedReader().let { file -> file.readLine().split(" ").last().also { file.close() } }
+    } else ""
+}

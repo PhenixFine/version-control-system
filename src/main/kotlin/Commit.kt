@@ -2,6 +2,7 @@ import java.io.File
 import java.security.MessageDigest
 
 const val COMMIT = "commit"
+const val CHECKOUT = "checkout"
 private const val COMMIT_FOLDER = "$FOLDER/commits"
 
 fun commit(message: String) {
@@ -36,5 +37,16 @@ private fun copyFiles(files: List<File>, directory: String) {
         files.forEach { file ->
             file.copyTo(File("$directory/$file"))
         }
+    }
+}
+
+fun checkout(hash: String) = println(if (hash.isEmpty()) "Commit id was not passed." else revertToCommit(hash))
+
+fun revertToCommit(hash: String): String {
+    val directory = File("$COMMIT_FOLDER/$hash")
+
+    return if (!directory.isDirectory) "Commit does not exist." else {
+        directory.copyRecursively(File("./"), true)
+        "Switched to commit $hash."
     }
 }
