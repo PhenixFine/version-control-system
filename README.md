@@ -2,6 +2,8 @@
 Stage 4 of 4 for JetBrains Academy - Kotlin - [Version Control System project](https://hyperskill.org/projects/177/stages/912/implement).   
 This stage has us implement the checkout command which allows the user to switch between commits.    
 ## Requirements
+### About
+The ability to roll back to the previous versions is crucial for software development. In this project, you will get acquainted with the idea of version control and write a simple version control system.
 ### Description
 In the last stage, implement the `checkout` command. It allows a user to switch between commits and restore the contents of the files according to the current commit.
 
