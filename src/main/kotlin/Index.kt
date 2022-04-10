@@ -3,7 +3,14 @@ import java.io.File
 const val ADD = "add"
 private val INDEX = File("$FOLDER/index.txt")
 
-fun add(fileName: String) = if (fileName.isNotEmpty()) addFile(fileName) else printIndex()
+fun addToIndex(fileName: String) = if (fileName.isNotEmpty()) addFile(fileName) else printIndex()
+
+fun getIndexFiles(): List<File>? {
+    return if (INDEX.isFile) {
+        val list = INDEX.readLines().map { File(it) }.filter { it.isFile }
+        list.ifEmpty { null }
+    } else null
+}
 
 private fun addFile(fileName: String) {
     if (File(fileName).isFile) {
@@ -20,5 +27,5 @@ private fun printIndex() {
     if (INDEX.isFile) {
         println("Tracked files:")
         print(INDEX.readText())
-    } else help("add")
+    } else help(ADD)
 }

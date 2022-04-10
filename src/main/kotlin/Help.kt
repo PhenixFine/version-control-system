@@ -3,8 +3,8 @@ private const val MAX_SPACE = 11 // largest command length in HELP_MAP + 3
 private val HELP_MAP = mapOf(
     CONFIG to "Get and set a username.",
     ADD to "Add a file to the index.",
-    "log" to "Show commit logs.",
-    "commit" to "Save changes.",
+    LOG to "Show commit logs.",
+    COMMIT to "Save changes.",
     "checkout" to "Restore a file."
 )
 

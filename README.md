@@ -1,68 +1,104 @@
 # Version Control System
-Stage 2 of 4 for JetBrains Academy - Kotlin - [Version Control System project](https://hyperskill.org/projects/177/stages/910/implement).   
-This stage has us add the option for the user to update config.txt and index.txt files, for updating the user and files being tracked.
+Stage 3 of 4 for JetBrains Academy - Kotlin - [Version Control System project](https://hyperskill.org/projects/177/stages/911/implement).   
+This stage has us implement the commit and log commands. Commit allows committing files if there have been changes to any files being tracked. Log prints all the commits that have been made, starting with the most recent.
 ## Requirements
 ### Description
-In this stage, your program should allow a user to set their name and add the files they want to track. Store a username in _config.txt_.
+In this stage, you should implement two commands. `Commit` will allow a user to save file changes; `log` will allow viewing the commit history.
 
-_Index.txt_ stores the files that were added to the index. Don't forget to store all the files of the version control system in the _vcs_ directory. You should create this directory programmatically. It may look something like this:
-```text
-.
-├── vcs
-│   ├── config.txt
-│   └── index.txt
-├── tracked_file.txt
-└── untracked_file.txt
-```
+Git may seem quite complicated. If you want to learn more, watch the [video explanation](https://youtu.be/P6jD966jzlk) by GitLab.
+
+The purpose of this project is to work with files. Store different file versions in the index according to the commits and make sure that each commit has a unique ID. ID should allow you to find a specific file version that matches this commit. You need to think about the concept of a commit ID.
+
+You can store commits inside _vsc/commits_. Each commit will be saved to a separate directory. These directories will include a commit's ID and additional information that you can store in _vsc/log.txt_.
+
+You will also need to find out whether a file has been changed since the last commit. For that, you need to calculate the hash of the current file and the hash of the last commit. If these values are different, then the file has been changed. Use **Java Cryptography Architecture** (JCA). JCA includes solutions that are based on various cryptographic algorithms such as **SHA1**, **SHA256**, and others. Hash functions are optional, you can use a different solution.
 ### Objectives
-You need to work on the following commands:  
-* `config` should allow the user to set their own name or output an already existing name. If a user wants to set a new name, the program must overwrite the old one.
-* `add` should allow the user to set the name of a file that they want to track or output the names of tracked files. If the file does not exist, the program should inform a user that the file does not exist. 
+Implement the following commands:
+* `commit` must be passed to the program along with a message (see examples). Save all changes. Each commit must be assigned a unique id. if there were no changes since the last commit, do not create a new commit. You don't need to optimize the storage of changes, just copy all the staged files to the commit folder every time.
+* `log` should show all the commits in reverse order.    
 
-| Do not create tracked_file.txt and untracked_file.txt. This is an example of the files that a user of your version control system will work with. |
+| Do not create file1.txt, file2.txt and untracked_file.txt. This is an example of the files that a user of your version control system will work with. |
 | :--- |
 ### Examples
 The greater-than symbol followed by a space (> ) represents the user input. Note that it's not part of the input.
-#### Example 1: the `config` argument
+#### Example 1: the `log` argument
 ```text
-Please, tell me who you are.
+No commits yet.
 ```
-#### Example 2: the `config John` argument
+This is the directory tree. Don't output it.
 ```text
-The username is John.
+.
+├── vcs
+│   ├── commits
+│   ├── config.txt
+│   ├── index.txt
+│   └── log.txt
+├── file1.txt
+├── file2.txt
+└── untracked_file.txt
 ```
-#### Example 3: the `config` argument
+#### Example 2: the `commit "Added several lines of code to the file1.txt"` argument
 ```text
-The username is John.
+Changes are committed.
 ```
-#### Example 4: the `config Max` argument
+This is the directory tree. Don't output it.
 ```text
-The username is Max.
+.
+├── vcs
+│   ├── commits
+│   │   └── 0b4f05fcd3e1dcc47f58fed4bb189196f99da89a
+│   │       ├── file1.txt
+│   │       └── file2.txt
+│   ├── config.txt
+│   ├── index.txt
+│   └── log.txt
+├── file1.txt
+├── file2.txt
+└── untracked_file.txt
 ```
-#### Example 5: the `add` argument.
+#### Example 3: the `log` argument
 ```text
-Add a file to the index.
+commit 0b4f05fcd3e1dcc47f58fed4bb189196f99da89a
+Author: John
+Added several lines of code to the file1.txt
 ```
-#### Example 6: the `add file.txt` arguments
+#### Example 4: the `commit "Changed several lines of code in the file2.txt"` argument
 ```text
-The file 'file.txt' is tracked.
+Changes are committed.
 ```
-#### Example 7: the `add` argument
+#### Example 5: the `log` argument
 ```text
-Tracked files:
-file.txt
+commit 2853da19f31cfc086cd5c40915253cb28d5eb01c
+Author: John
+Changed several lines of code in the file2.txt
+
+commit 0b4f05fcd3e1dcc47f58fed4bb189196f99da89a
+Author: John
+Added several lines of code to the file1.txt
 ```
-#### Example 8: the `add new_file.txt` argument
+This is the directory tree. Don't output it.
 ```text
-The file 'new_file.txt' is tracked.
+.
+├── vcs
+│   ├── commits
+│   │   ├── 2853da19f31cfc086cd5c40915253cb28d5eb01c
+│   │   │   ├── file1.txt
+│   │   │   └── file2.txt
+│   │   └── 0b4f05fcd3e1dcc47f58fed4bb189196f99da89a
+│   │       ├── file1.txt
+│   │       └── file2.txt
+│   ├── config.txt
+│   ├── index.txt
+│   └── log.txt
+├── file1.txt
+├── file2.txt
+└── untracked_file.txt
 ```
-#### Example 9: the `add` argument
+#### Example 6: the `commit "Files were not changed"` argument
 ```text
-Tracked files:
-file.txt
-new_file.txt
+Nothing to commit.
 ```
-#### Example 10: the `add not_exists_file.txt` argument
+#### Example 7: the `commit` argument
 ```text
-Can't find 'not_exists_file.txt'.
+Message was not passed.
 ```
